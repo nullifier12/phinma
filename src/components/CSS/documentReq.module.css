@@ -1,0 +1,238 @@
+/* Import Google font - Poppins */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  text-decoration: none;
+  list-style-type: none;
+}
+
+.header_wrapper {
+  min-height: 45px;
+}
+
+.header_wrapper header h2 {
+  text-transform: capitalize;
+  font-family: "Inter";
+  font-style: italic;
+  font-weight: 1200;
+  font-size: 20px;
+  line-height: 35px;
+  color: #000000;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #f2f2f2;
+}
+.container {
+  max-width: 900px;
+  width: 100%;
+  background: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 1);
+}
+
+body::-webkit-scrollbar {
+  width: 4px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgb(173, 171, 171);
+  border-radius: 100px;
+}
+
+.container img {
+  width: 200px;
+  height: 80px;
+}
+
+.container h5 {
+  border-bottom: #000000 solid 1px;
+  margin-bottom: 20px;
+}
+
+.container p {
+  font-family: "Georgia";
+  font-style: normal;
+  font-size: 11px;
+  margin-top: 20px;
+  color: rgb(172, 170, 170);
+  margin-bottom: -10px;
+}
+
+.container b {
+  color: #000000;
+  font-size: 20px;
+  font-family: "Inter";
+  font-style: normal;
+}
+.container header {
+  font-size: 1.5rem;
+  color: #0249b4;
+  font-weight: 500;
+  text-align: center;
+  font-family: "Georgia";
+  font-style: normal;
+}
+.container .form {
+  margin-top: 30px;
+}
+.form {
+  width: 100% !important;
+}
+
+::placeholder {
+  color: rgb(202, 201, 201);
+}
+
+.container h6 {
+  color: #ffff;
+  background-color: #0249b4;
+  padding: 3px 8px;
+  margin-top: 20px;
+  margin-bottom: -10px;
+}
+select {
+  border-radius: 8px;
+}
+.form .input-box {
+  width: 100%;
+  margin-top: 10px;
+}
+.input-box label {
+  color: #333;
+  font-weight: 500;
+}
+.form :where(.input-box input, .select-box) {
+  height: 35px;
+  width: 100%;
+  outline: none;
+  font-size: 1rem;
+  color: #4b4a4a;
+  border-radius: 10px;
+  border: 1px solid rgb(143, 140, 140);
+  padding: 0 20px 0 20px;
+}
+.input-box input:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+.form .column {
+  display: flex;
+  column-gap: 15px;
+}
+.form .gender-box {
+  margin-top: 30px;
+}
+
+.form :where(.gender-option, .gender) {
+  display: flex;
+  align-items: center;
+  column-gap: 50px;
+  flex-wrap: wrap;
+}
+.form .gender {
+  column-gap: 3px;
+  margin-bottom: 20px;
+}
+.gender input {
+  accent-color: rgb(130, 106, 251);
+}
+.form :where(.gender input, .gender label) {
+  cursor: pointer;
+}
+.gender label {
+  color: #272626;
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+.address :where(input, .select-box) {
+  margin-bottom: 7px;
+}
+.select-box select {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: none;
+  color: #1d1c1c;
+  font-size: 1rem;
+}
+/*************************************/
+.select-bo select {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: none;
+  color: #1d1c1c;
+  font-size: 1rem;
+}
+
+.select-bo {
+  margin-bottom: 7px;
+}
+
+.select-bo {
+  height: 35px;
+  width: 220%;
+  outline: none;
+  font-size: 1rem;
+  color: #4b4a4a;
+  border-radius: 10px;
+  border: 1px solid rgb(143, 140, 140);
+  padding: 0px 20px 0 20px;
+}
+/**********************************************/
+.requestModal {
+  width: 60vw;
+  max-width: 90vw;
+}
+.addRequest {
+  padding: 1px 45%;
+}
+.form button {
+  height: 55px;
+  width: 100%;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 400;
+  margin-top: 30px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #0249b4;
+  border-radius: 20px;
+}
+.form button:hover {
+  background: #2b5eaa;
+}
+
+/*Responsive*/
+
+@media only screen and (min-width: 400px) {
+  .container img {
+    width: 300px;
+    height: 110px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .form .column {
+    flex-wrap: wrap;
+  }
+  .form :where(.gender-option, .gender) {
+    row-gap: 15px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .Request_Sudent form div {
+    display: flex;
+  }
+}
