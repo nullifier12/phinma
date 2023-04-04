@@ -25,7 +25,7 @@ module.exports = {
         nr_company: req.body.currentCompany,
         nr_position: req.body.position,
         nr_price: req.body.paymentTotal,
-        nr_schoolid: req.body.schpolid,
+        nr_schoolid: req.body.schoolid,
         nr_form: reqCollection,
       })
       .then((result) => {

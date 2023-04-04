@@ -128,7 +128,7 @@ const DocumentRequest = (props) => {
       birthday: bDay.current.value,
       yearlevel: yearLvl.current.value,
       address: address.current.value,
-      scholid: schoolId.current.value,
+      schoolid: schoolId.current.value,
       undergrad: underGrad.current.value,
       currentCompany: currentComp.current.value,
       position: position.current.value,
