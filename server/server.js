@@ -6,7 +6,8 @@ const bodyParser = require("body-parser");
 const auth = require("./Auth/passport-config");
 const flash = require("express-flash");
 const session = require("express-session");
-
+const cookieMiddleWare = require("universal-cookie-express");
+app.use(cookieMiddleWare());
 app.use(flash());
 app.use(
   session({
