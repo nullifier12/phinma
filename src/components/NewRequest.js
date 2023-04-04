@@ -1,8 +1,15 @@
-import { Fragment, useRef } from "react";
+import { Fragment, useRef, useCallback, useEffect, useState } from "react";
 import style from "../components/CSS/dashboard.module.css";
 import DataTable from "react-data-table-component";
+import Moment from "react-moment";
+import axios from "axios";
+
 const NewRequest = () => {
+  const [newRequestData, setNewReqData] = useState([]);
+  const [allRegistrar, setRegistrar] = useState([]);
+  // const [reqCollections, setCollection] = useState([]);
   const search = useRef();
+
   const showID = (e) => {
     console.log(e.currentTarget.id);
   };
@@ -28,16 +35,27 @@ const NewRequest = () => {
       selector: (row) => row.department,
     },
     {
-      name: "Request",
-      selector: (row) => row.request,
-    },
-    {
-      name: "Copy",
-      selector: (row) => row.copy,
+      name: "Request Details",
+      cell: (row) => {
+        const newData = row.requestDetails.filter((item) => item !== null);
+        return (
+          <Fragment>
+            <select className={style.assign}>
+              {newData.map((d, index) => {
+                return (
+                  <option
+                    key={index}
+                  >{`${d.copyNumber} ${d.requestName}`}</option>
+                );
+              })}
+            </select>
+          </Fragment>
+        );
+      },
     },
     {
       name: "Date",
-      selector: (row) => row.date,
+      selector: (row) => <Moment format="LL">{row.date}</Moment>,
     },
     {
       name: "Assign to",
@@ -45,15 +63,20 @@ const NewRequest = () => {
         return (
           <Fragment>
             <select className={style.assign}>
-              <option>Roland</option>
-              <option>Jerwil</option>
+              {allRegistrar.map((d) => {
+                return (
+                  <option id={d.id} key={d.id}>
+                    {d.phn_username}
+                  </option>
+                );
+              })}
             </select>
           </Fragment>
         );
       },
     },
     {
-      name: "Prices",
+      name: "Total Request Payment",
       selector: (row) => row.price,
     },
     {
@@ -80,20 +103,31 @@ const NewRequest = () => {
       },
     },
   ];
-  const data = [
-    {
-      id: 1,
-      name: "Roland Capinpin",
-      email: "capinpinroland25@gmail.com",
-      course: "IT",
-      department: "CCS",
-      date: "Jan. 12, 1999",
-      request: "TOR",
-      copy: 2,
-      price: 450,
-      payment: "proofofpay",
-    },
-  ];
+  const getAllNewRequest = useCallback(async () => {
+    await axios.get("/getNewRequest").then((result) => {
+      const newData = result.data.map((d) => {
+        return {
+          id: d.id,
+          name: `${d.nr_fname} ${d.nr_mname} ${d.nr_lname}`,
+          email: d.nr_email,
+          course: d.nr_course,
+          department: d.nr_department,
+          requestDetails: d.nr_form,
+          date: d.nr_date,
+          price: d.nr_price,
+        };
+      });
+      setNewReqData(newData);
+      axios.get("/getAllRegistrar").then((result) => {
+        setRegistrar(result.data);
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    getAllNewRequest();
+  }, [getAllNewRequest]);
+
   const searchData = () => {
     console.log(search.current.value);
   };
@@ -124,21 +158,11 @@ const NewRequest = () => {
                 </div>
 
                 <div className="card-body">
-                  {/* <table className="table table-bordered table-striped table-hover table-sm">
-                  <thead className="thead-dark">
-                    <tr>
-                      <th>No.</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Course</th>
-                      <th>Department</th>
-                      <th>Date</th>
-                      <th>Prices</th>
-                      <th>Payment</th>
-                    </tr>
-                  </thead>
-                </table> */}
-                  <DataTable data={data} columns={columns} pagination />
+                  <DataTable
+                    data={newRequestData}
+                    columns={columns}
+                    pagination
+                  />
                 </div>
               </div>
             </div>

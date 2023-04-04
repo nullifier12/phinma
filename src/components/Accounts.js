@@ -2,7 +2,7 @@ import { Fragment, useCallback, useEffect, useState } from "react";
 import style from "../components/CSS/dashboard.module.css";
 import DataTable from "react-data-table-component";
 import axios from "axios";
-import { CSVLink } from "react-csv";
+// import { CSVLink } from "react-csv";
 
 const customStyles = {
   rows: {
@@ -271,23 +271,23 @@ const Accounts = () => {
       decline: 3,
     },
   ];
-  const CSVheader = [
-    {
-      label: "Name",
-      key: "name",
-    },
-    { label: "Email", key: "email" },
-    { label: "Phone", key: "phone" },
-    { label: "Address", key: "address" },
-    { label: "Gender", key: "gender" },
-    { label: "School ID", key: "schoolid" },
-    { label: "Printed", key: "printed" },
-    { label: "Done", key: "done" },
-    {
-      label: "Decline",
-      key: "decline",
-    },
-  ];
+  // const CSVheader = [
+  //   {
+  //     label: "Name",
+  //     key: "name",
+  //   },
+  //   { label: "Email", key: "email" },
+  //   { label: "Phone", key: "phone" },
+  //   { label: "Address", key: "address" },
+  //   { label: "Gender", key: "gender" },
+  //   { label: "School ID", key: "schoolid" },
+  //   { label: "Printed", key: "printed" },
+  //   { label: "Done", key: "done" },
+  //   {
+  //     label: "Decline",
+  //     key: "decline",
+  //   },
+  // ];
   const changeAccountTable = (e) => {
     const id = e.target.selectedIndex;
     const el = e.target.childNodes[id];

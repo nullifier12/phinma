@@ -3,6 +3,8 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Logo from "../img/AU-logo.png";
 import style from "../CSS/documentReq.module.css";
+import axios from "axios";
+
 const DocumentRequest = (props) => {
   const [selectTags, setSelectTags] = useState([
     { requestName: "", copyNumber: 1, statusRequest: "no", selectedValue: 0 },
@@ -23,9 +25,6 @@ const DocumentRequest = (props) => {
   };
 
   const handleSelectTagChange = (index, event) => {
-    // const indexes = event.target.selectedIndex;
-    // const el = event.target.childNodes[indexes];
-    // console.log(el.getAttribute("data-value"));
     const { value } = event.target;
     const newSelectTags = [...selectTags];
     newSelectTags[index].selectedValue =
@@ -36,18 +35,12 @@ const DocumentRequest = (props) => {
       const result = d.selectedValue * d.copyNumber;
       return { ...d, result };
     });
-    // console.log(newTotal);
+
     const total = newTotal.reduce(
       (accumulator, item) => accumulator + item.result,
       0
     );
     setTotalpay(total);
-    // setSelectTags((prevSelects) => {
-    //   const updatedSelects = [...prevSelects];
-    //   updatedSelects[index].selectedValue = dataset.value;
-    //   return updatedSelects;
-    // });
-    // console.log(selectTags);
   };
   const copyHandler = (index, event) => {
     const { value } = event.target;
@@ -58,7 +51,6 @@ const DocumentRequest = (props) => {
       const result = d.selectedValue * d.copyNumber;
       return { ...d, result };
     });
-    // console.log(newTotal);
     const total = newTotal.reduce(
       (accumulator, item) => accumulator + item.result,
       0
@@ -93,9 +85,7 @@ const DocumentRequest = (props) => {
     CAV: 600,
     Hd: 500,
   };
-  // const [reqTypePrice, setReqType] = useState();
 
-  // const [copyOfreq, setCopy] = useState(1);
   const form = useRef();
   const fname = useRef();
   const mnane = useRef();
@@ -111,9 +101,6 @@ const DocumentRequest = (props) => {
   const underGrad = useRef();
   const currentComp = useRef();
   const position = useRef();
-  const reqType = useRef();
-  const numOfcopy = useRef();
-  const requestStatus = useRef();
   const proofOfpay = useRef();
   const tor = useRef();
   const torBoard = useRef();
@@ -121,31 +108,42 @@ const DocumentRequest = (props) => {
   const dismisal = useRef();
   const certification = useRef();
   const Auth = useRef();
-  // const requestType = (event) => {
-  //   const index = event.target.selectedIndex;
-  //   const el = event.target.childNodes[index];
-  //   console.log(el.getAttribute("value"));
-  //   const { dataset } = event.target.options[event.target.selectedIndex];
-  //   const dataValue = dataset.value;
-  //   setReqType(dataValue);
-  // };
-  // const copy = (event) => {
-  //   const { dataset } = event.target.options[event.target.selectedIndex];
-  //   const dataValue = dataset.value;
-  //   setCopy(dataValue);
-  // };
-  // let price = reqTypePrice * copyOfreq;
+
   const hideFormReq = () => {
     props.handleClose(false);
-    // setCopy(1);
-    // setReqType(null);
+    setTotalpay(0);
     setSelectTags([
       { requestName: "", copyNumber: 1, statusRequest: "no", selectedValue: 0 },
     ]);
   };
-  // const saveRequest = (event) => {
-  //   event.preventDefault();
-  // };
+  const sendRequest = async (e) => {
+    const data = {
+      firstname: fname.current.value,
+      middlename: mnane.current.value,
+      lastname: lname.current.value,
+      email: email.current.value,
+      course: course.current.value,
+      phoneno: phoneNum.current.value,
+      department: dept.current.value,
+      birthday: bDay.current.value,
+      yearlevel: yearLvl.current.value,
+      address: address.current.value,
+      scholid: schoolId.current.value,
+      undergrad: underGrad.current.value,
+      currentCompany: currentComp.current.value,
+      position: position.current.value,
+      requestcollection: selectTags,
+      paymentTotal: totalPay,
+    };
+    if (data.requestcollection[0].requestName === "") {
+      alert("please add request");
+    } else {
+      e.preventDefault();
+      await axios.post("/newRequest", data).then((result) => {
+        hideFormReq();
+      });
+    }
+  };
   return (
     <Fragment>
       <Modal
@@ -299,10 +297,10 @@ const DocumentRequest = (props) => {
                     <select name="NEWREQUEST_DEPARTMENT" ref={dept}>
                       <option hidden></option>
                       <option value="CITE">CITE</option>
-                      <option value="CAHS">CELA</option>
+                      <option value="CAHS">CAHS</option>
                       <option value="CMA">CMA</option>
-                      <option value="CELA">CCJE</option>
-                      <option value="CCJE">CAHS</option>
+                      <option value="CELA">CELA</option>
+                      <option value="CCJE">CCJE</option>
                       <option value="CAS">(CAS) All 1st year </option>
                     </select>
                   </div>
@@ -554,8 +552,8 @@ const DocumentRequest = (props) => {
                       >
                         <div className="select-bo">
                           <select
+                            required
                             name="requestName"
-                            ref={reqType}
                             value={selectTag.requestName}
                             onChange={(event) =>
                               handleSelectTagChange(index, event)
@@ -665,7 +663,6 @@ const DocumentRequest = (props) => {
                     <div className="select-box">
                       <select
                         name="copyNumber"
-                        ref={numOfcopy}
                         value={selectTag.copyNumber}
                         onChange={(event) => copyHandler(index, event)}
                       >
@@ -676,7 +673,7 @@ const DocumentRequest = (props) => {
                         <option value="5">5 Copy</option>
                       </select>
                     </div>
-                    <div className="select-box" ref={requestStatus}>
+                    <div className="select-box">
                       <select
                         name="statusRequest"
                         onChange={(event) => reqStat(index, event)}
@@ -815,7 +812,7 @@ const DocumentRequest = (props) => {
           </section>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={hideFormReq}>
+          <Button variant="primary" onClick={sendRequest}>
             Send Request
           </Button>
           <Button variant="secondary" onClick={hideFormReq}>

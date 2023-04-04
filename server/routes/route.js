@@ -11,6 +11,9 @@ function checkAuthenticated(req, res, next) {
   req.universalCookies.remove("authCookie");
   res.redirect("/");
 }
+function dummy(req, res, next) {
+  return next();
+}
 
 router.route("/adminLogin").post((req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
@@ -33,5 +36,8 @@ router.route("/adminLogin").post((req, res, next) => {
 router
   .route("/getAccount")
   .post(checkAuthenticated, adminController.getAccount);
+router.route("/newRequest").post(dummy, adminController.newRequest);
+router.route("/getNewRequest").get(dummy, adminController.getAllnewRequest);
+router.route("/getAllRegistrar").get(dummy, adminController.getRegistrar);
 
 module.exports = router;
